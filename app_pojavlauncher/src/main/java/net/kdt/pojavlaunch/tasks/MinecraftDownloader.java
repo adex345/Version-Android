@@ -70,16 +70,8 @@ public class MinecraftDownloader {
         if(activity != null){
             isLocalProfile = Tools.isLocalProfile(activity);
             Tools.switchDemo(Tools.isDemoProfile(activity));
-        } else {
-            isLocalProfile = false;
-            Tools.switchDemo(false);
-        }
-
         sExecutorService.execute(() -> {
             try {
-                if(!isLocalProfile){
-                    throw new RuntimeException("Download failed. Please make sure you are logged in with a Microsoft Account.");
-                }
                 downloadGame(activity, version, realVersion);
                 listener.onDownloadDone();
             }catch (UnknownHostException e){
@@ -399,4 +391,4 @@ public class MinecraftDownloader {
     private void scheduleLoggingAssetDownloadIfNeeded(JMinecraftVersionList.LoggingConfig loggingConfig) throws IOException {
         if(loggingConfig.client == null || loggingConfig.client.file == null) return;
         JMinecraftVersionList.FileProperties loggingFileProperties = loggingConfig.client.file;
-        File internalLoggingConfig = new File(Tools
+        File internalLoggingConfig = new File(Tools.DI
